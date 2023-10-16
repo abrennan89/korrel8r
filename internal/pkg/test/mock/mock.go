@@ -1,8 +1,7 @@
 // Copyright: This file is part of korrel8r, released under https://github.com/korrel8r/korrel8r/blob/main/LICENSE
 
 // package mock is a mock implementation of a korrel8r domain for testing.
-// All the mock types (Domain, Class, Object etc.) are simply integers that implement the korrel8r interfaces.
-// This simplifies tests since they can be initialized from int constants.
+// It is also useful as an example of the structure of a domain package.
 package mock
 
 import (
@@ -16,16 +15,14 @@ import (
 	"golang.org/x/exp/slices"
 )
 
-var (
-	// Validate implementation of interfaces.
-	_ korrel8r.Domain = Domain("")
-	_ korrel8r.Class  = Domain("").Class("")
-	_ korrel8r.Query  = Query{}
-	_ korrel8r.Rule   = Rule{}
-	_ korrel8r.Store  = NewStore(Domain(""))
-)
+// Domain is the entry point for a domain package.
+// Every domain package must export  have a _variable_ named Domain that implements korrel8r.Domain.
+var Domain korrel8r.Domain = MockDomain("mock")
 
-type Domain string
+// Rule is a mock rule for tests. Most domains do not need to implement Rule
+var _ korrel8r.Rule = Rule{}
+
+type MockDomain string
 
 func (d Domain) Name() string                                       { return string(d) }
 func (d Domain) String() string                                     { return d.Name() }

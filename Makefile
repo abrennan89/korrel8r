@@ -30,7 +30,10 @@ generate: $(VERSION_TXT) pkg/api/docs ## Run code generation, pre-build.
 	go mod tidy
 
 $(VERSION_TXT): force # Force because it depends on value of make variable $(TAG)
-	@if test "$$(cat $(VERSION_TXT))" != "$(TAG)"; then echo $(TAG) | tee $@; fi
+	if test "$$(cat $(VERSION_TXT))" != "$(TAG)"; then		\
+		echo $(TAG) | tee $@ ;					\
+		sed 's/^:version:.*/:version: $(TAG)/' -i README.adoc ;	\
+	fi
 
 pkg/api/docs: $(shell find pkg/api pkg/korrel8r -name *.go)
 	swag init -q -g $(dir $@)/api.go -o $@
