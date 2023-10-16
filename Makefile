@@ -30,15 +30,15 @@ generate: $(VERSION_TXT) pkg/api/docs ## Run code generation, pre-build.
 	go mod tidy
 
 $(VERSION_TXT): force # Force because it depends on value of make variable $(TAG)
-	if test "$$(cat $(VERSION_TXT))" != "$(TAG)"; then		\
-		echo $(TAG) | tee $@ ;					\
-		sed 's/^:version:.*/:version: $(TAG)/' -i README.adoc ;	\
+	if test "$$(cat $(VERSION_TXT))" != "$(TAG)"; then			\
+		echo $(TAG) | tee $@ ;						\
+		sed 's/^:version:.*/:version: $(TAG)/' -i docs/README.adoc ;	\
 	fi
 
 pkg/api/docs: $(shell find pkg/api pkg/korrel8r -name *.go)
 	swag init -q -g $(dir $@)/api.go -o $@
 	swag fmt $(dir $@)
-	swagger -q generate markdown -f $@/swagger.json doc --output doc/rest-api.md
+	swagger -q generate markdown -f $@/swagger.json doc --output docs/rest-api.md
 
 lint: ## Run the linter to find and fix code style problems.
 	golangci-lint run --fix
