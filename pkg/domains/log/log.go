@@ -1,6 +1,38 @@
 // Copyright: This file is part of korrel8r, released under https://github.com/korrel8r/korrel8r/blob/main/LICENSE
 
-// package log is a domain for openshift-logging logs stored in Loki or LokiStack
+// Package log is a domain for openshift-logging logs stored in Loki or LokiStack.
+//
+// # Class
+//
+// There are 3 classes corresponding to the 3 openshift logging log types:
+//
+//	log:application
+//	log:infrastructure
+//	log:audit
+//
+// # Object
+//
+// A log object is a log record string in the Viaq JSON format stored by openshift logging.
+//
+// # Query
+//
+// A query is a [LogQL] query string, prefixed by the logging class, for example: FIXME EXAMPLESj
+//
+//	log:infrastructure:{ kubernetes_namespace_name="openshift-cluster-version", kubernetes_pod_name="cluster-version-operator-8d86bcb65-btlgn" }
+//
+// # Store
+//
+// To connect to a lokiStack store use this configuration:
+//
+//	domain: log
+//	lokistack: URL_OF_LOKISTACK_PROXY
+//
+// To connect to plain loki store use:
+//
+//	domain: log
+//	loki: URL_OF_LOKI
+//
+// [LogQL]: https://grafana.com/docs/loki/latest/query/
 package log
 
 import (

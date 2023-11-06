@@ -21,13 +21,14 @@ IMGTOOL?=$(shell which podman || which docker)
 all: generate lint test install ## Generate build and test.
 
 clean: # Warning: runs `git clean -dfx` and removes checked-in generated files.
-	rm -vrf _site docs/zz_*.adoc pkg/api/docs /cmd/korrel8r/version.txt
+	rm -vrf _site docs/zz_*.adoc pkg/api/zz_docs /cmd/korrel8r/version.txt
 	git clean -dfx
 
 tools: ## Install tools for generating, linting nad testing locally.
 	go install github.com/go-swagger/go-swagger/cmd/swagger@latest
 	go install github.com/swaggo/swag/cmd/swag@latest
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	go install github.com/mariotoffia/goasciidoc@latest
 	go install sigs.k8s.io/kind@latest
 
 VERSION_TXT=cmd/korrel8r/version.txt
@@ -38,11 +39,11 @@ endif
 $(VERSION_TXT):
 	echo $(VERSION) > $@
 
-generate: $(VERSION_TXT) pkg/api/docs _site ## Generate code and doc.
+generate: $(VERSION_TXT) pkg/api/zz_docs _site ## Generate code and doc.
 	hack/copyright.sh
 	go mod tidy
 
-pkg/api/docs: $(wildcard pkg/api/*.go pkg/korrel8r/*.go)
+pkg/api/zz_docs: $(wildcard pkg/api/*.go pkg/korrel8r/*.go)
 	@mkdir -p $(dir $@)
 	swag init -q -g pkg/api/api.go -o $@
 	swag fmt pkg/api
@@ -107,10 +108,10 @@ _site: $(wildcard docs/*.adoc) docs/zz_domains.adoc docs/zz_rest_api.adoc Makefi
 	$(ADOC_RUN) asciidoctor $(ADOC_ARGS)
 	$(ADOC_RUN) asciidoctor-pdf -a allow-uri-read -o ebook.pdf $(ADOC_ARGS)
 	@touch $@
-docs/zz_domains.adoc: $(shell find cmd/korrel8r-doc pkg -name '*.go')
+docs/zz_domains.adoc: $(shell find cmd/korrel8r-doc internal pkg -name '*.go')
 	go run ./cmd/korrel8r-doc pkg/domains/* > $@
 # Note docs/templates/markdown overrides the swagger markdown templates to generate asciidoc
-docs/zz_rest_api.adoc: pkg/api/docs docs/templates/markdown/docs.gotmpl
+docs/zz_rest_api.adoc: pkg/api/zz_docs docs/templates/markdown/docs.gotmpl
 	swagger -q generate markdown -T docs/templates -f $</swagger.json --output $@
 
 release: all image ## Create a local release tag and commit. TAG must be set to vX.Y.Z.

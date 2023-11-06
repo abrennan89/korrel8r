@@ -64,9 +64,10 @@ Browse the following URLs:
 
 == Developers
 
-Browsable Go and REST API documentation (generated from source):
-- [REST API documentation](pkg/api/docs/swagger.md)
-- [Go API documentation](https://pkg.go.dev/github.com/korrel8r/korrel8r/pkg/korrel8r)
+Documentation:
+
+- {pages}[Korrel8r User guide and Reference] for more about what Korrel8r is and how to use it.
+- https://pkg.go.dev/github.com/korrel8r/korrel8r/pkg/korrel8r:[Go package documentation]
 
 If you are interested in helping to develop Korrel8r:
 - clone this repository
