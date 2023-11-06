@@ -18,7 +18,7 @@ func NewClient() (client.Client, *rest.Config, error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	// FIXME configurable settings for k8s client.
+	// TODO configurable settings for k8s client.
 	// Reduce client-side throttling for rapid results.
 	cfg.QPS = 100
 	cfg.Burst = 1000

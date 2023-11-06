@@ -27,9 +27,8 @@
 // [metric sample]: https://pkg.go.dev/github.com/prometheus/common@v0.45.0/model#Sample
 package metric
 
-// # FIXME doc comment needs to show model.Sample structure or link to it properly.
-
-// # FIXME metrics are only usable as goals.
+// TODO: doc comment needs to show model.Sample structure or link to it properly.
+// TODO: metrics are only usable as goals.
 
 import (
 	"context"

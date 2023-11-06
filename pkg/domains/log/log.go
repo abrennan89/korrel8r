@@ -16,9 +16,9 @@
 //
 // # Query
 //
-// A query is a [LogQL] query string, prefixed by the logging class, for example: FIXME EXAMPLESj
+// A query is a [LogQL] query string, prefixed by the logging class, for example:
 //
-//	log:infrastructure:{ kubernetes_namespace_name="openshift-cluster-version", kubernetes_pod_name="cluster-version-operator-8d86bcb65-btlgn" }
+//	log:infrastructure:{ kubernetes_namespace_name="openshift-cluster-version", kubernetes_pod_name=~".*-operator-.*" }
 //
 // # Store
 //
@@ -80,7 +80,7 @@ func (domain) Description() string              { return "Records from container
 func (domain) Class(name string) korrel8r.Class { return classMap[name] }
 func (domain) Classes() []korrel8r.Class        { return classes }
 
-// FIXME should be on Class?
+// TODO should be on Class?
 func (d domain) Query(s string) (korrel8r.Query, error) {
 	c, s, err := impl.ParseQueryString(d, s)
 	if err != nil {

@@ -59,7 +59,6 @@ type Class schema.GroupVersionKind
 type Object client.Object
 
 // Query represents a Kubernetes resource query.
-// FIXME DOC
 type Query struct {
 	// Namespace restricts the search to a namespace.
 	Namespace string `json:"namespace,omitempty"`

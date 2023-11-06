@@ -117,10 +117,10 @@ A log object is a log record string in the Viaq JSON format stored by openshift 
 
 === Query
 
-A query is a https://grafana.com/docs/loki/latest/query/[LogQL] query string, prefixed by the logging class, for example: FIXME EXAMPLESj
+A query is a https://grafana.com/docs/loki/latest/query/[LogQL] query string, prefixed by the logging class, for example:
 
 ----
-log:infrastructure:{ kubernetes_namespace_name="openshift-cluster-version", kubernetes_pod_name="cluster-version-operator-8d86bcb65-btlgn" }
+log:infrastructure:{ kubernetes_namespace_name="openshift-cluster-version", kubernetes_pod_name=~".*-operator-.*" }
 ----
 
 === Store

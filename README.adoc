@@ -34,9 +34,10 @@ korrel8r web -http :8080 &
 
 With korrel8r running, you can browse the following URLs:
 
-http://localhost:8080 - Interactive browser interface.
-* http://localhost:8080/api # REST API documentation
+- http://localhost:8080 - Interactive browser interface.
+- http://localhost:8080/api - REST API documentation
 
+You can also run korrel8r as a command line tool, see `korrel8r --help` for commands and options.
 
 === Deploying on a cluster
 
